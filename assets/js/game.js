@@ -1,3 +1,12 @@
+/*GAME FUNCTIONS*/
+
+//function to generate a random numeric value
+var randomNumber = function (min, max) {
+  var value = Math.floor(Math.random() * (max-min +1)+min);
+
+  return value;
+};
+
 // fight function
 var fight = function(enemy) {
   while (playerInfo.health > 0 && enemy.health > 0) {
@@ -64,6 +73,7 @@ var fight = function(enemy) {
 var startGame = function() {
   // reset player state
   playerInfo.reset();
+
 // fight each enemy-robot by looping over them and fighting them one at a time
   for (var i = 0; i < enemyInfo.length; i++) {
     // if player is still alive, keep fighting
@@ -76,9 +86,6 @@ var startGame = function() {
 
       // reset enemy.health before starting new fight
       pickedEnemyObj.health = randomNumber(40, 60);
-
-      // use debugger to pause script from running and check what's going on at that moment in the code
-      // debugger;
 
       // pass the pickedenemy.name variable's value into the fight function, where it will assume the value of the enemy.name parameter
       fight(pickedEnemyObj);
@@ -103,33 +110,29 @@ var startGame = function() {
   // after the loop ends, player is either out of health or enemies to fight, so run the endGame function
   endGame();
 };
-
-//debugger;
-
  
 // funtion to end the entire game
 var endGame = function() {
+  window.alert("The game has now ended. Let's see how you did!");
+
   // if player is still alive, player wins!
   if (playerInfo.health >0) {
     window.alert("Great job, you've survived the game! You now have a score of " + playerInfo.money +".");
-  }
-  else {
+  } else {
     window.alert("You've lost your robot in battle.");
   }
-
 
 // ask player if they would like to play again
   var playAgainConfirm = window.confirm("Would you like to play again?");
 
   if (playAgainConfirm) {
-    // restart the game
     startGame();
-  }
-  else {
+  } else {
     window.alert("Thank you for playing Robot Gladiators! Come back soon")
   }
 };
 
+// go to shop between battles function
 var shop = function() {
   // ask player what they'd like to do
   var shopOptionPrompt = window.prompt (
@@ -142,12 +145,10 @@ var shop = function() {
     case "refill":
       playerInfo.refillHealth ();
       break;
-
     case "UPGRADE":
     case "upgrade":
       playerInfo.upgradeAttack();
       break;
-
     case "LEAVE":
     case "leave":
       window.alert("Leaving the store.");
@@ -163,13 +164,11 @@ var shop = function() {
   }
 };
 
-//function to generate a random numeric value
-var randomNumber = function (min, max) {
-  var value = Math.floor(Math.random() * (max-min +1)+min);
+/* END GAME FUNCTIONS */
 
-  return value;
-};
+/*GAME INFORMATION / VARIABLES */
 
+// Player information
 var playerInfo = {
   name: window.prompt("What is your robot's name?"),
   health: 100,
@@ -185,7 +184,8 @@ var playerInfo = {
       window.alert("Refilling player's health by 20 for 7 dollars.");
       this.health +=20;
       this.money -=7;
-  } else {
+  } 
+  else {
       window.alert("You don't have enough money!");
     }
   },
@@ -194,7 +194,8 @@ var playerInfo = {
       window.alert("Upgrading player's attack by 6 for 7 dollars.");
       this.attack +=6
       this.money -=7;
-    } else {
+    } 
+    else {
       window.alert("You don't have enough money!");
     }
   }
@@ -214,24 +215,13 @@ var enemyInfo = [
     attack: randomNumber(10,14)
   }
 ];
-// start the game when the page loads
-startGame();
 
-//Wrap the game logic in a startGame() function
-//When the player is defeated or there are no more enemies, call an endGame() function that:
-//    Alerts the player's total stats
-//    Asks the player if they want to play again
-//    If yes, call startGame() to restart the game
-//After the player skips or defeats an enemy (and there are still more robots to fight):
-//    Ask the player if they want to "shop"
-//    If no, continue as normal
-//    If yes, call the shop() function
-//    In the shop() function, ask player if they want to "refill" health, "upgrade" attack, or "leave" the shop
-//    If refill, subtract money points from player and increase health
-//    If upgrade, subtract money points from player and increase attack power
-//    If leave, alert goodbye and exit the function
-//    If any other invalid option, call shop() again
-//
-//
-//
-//
+console.log(enemyInfo);
+console.log(enemyInfo[0]);
+console.log(enemyInfo[0].name);
+console.log(enemyInfo[0]['attack']);
+
+/*END GAME INFORMATION*/
+
+/* RUN GAME */
+startGame();
